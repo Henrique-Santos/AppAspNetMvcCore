@@ -11,7 +11,7 @@ namespace Business.Interfaces
         Task AddAsync(TEntity entity);
         Task UpdateAsync(TEntity entity);
         Task DeleteAsync(Guid id);
-        Task<IEnumerable<TEntity>> Search(Expression<Func<TEntity, bool>> predicate);
-        Task<int> SaveChanges();
+        Task<IEnumerable<TEntity>> SearchAsync(Expression<Func<TEntity, bool>> predicate);
+        Task<int> SaveChangesAsync();
     }
 }

@@ -18,7 +18,7 @@ namespace Data.Repositories
             DbSet = db.Set<TEntity>();
         }
 
-        public virtual async Task<IEnumerable<TEntity>> Search(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<IEnumerable<TEntity>> SearchAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await DbSet.AsNoTracking().Where(predicate).ToListAsync();
         }
@@ -39,23 +39,23 @@ namespace Data.Repositories
             // O uso do DbSet serve como um atalho para a implementação dos métodos do repository
             /* Db.Set<TEntity>().Add(entity); */
             DbSet.Add(entity);
-            await SaveChanges();
+            await SaveChangesAsync();
         }
 
         public virtual async Task DeleteAsync(Guid id)
         {
             // Por todos herdarem de TEntity e Entity possuir o Id é possivel fazer isso. Removemos do banco com um objeto genérico
             DbSet.Remove(new TEntity { Id = id });
-            await SaveChanges();
+            await SaveChangesAsync();
         }
 
         public virtual async Task UpdateAsync(TEntity entity)
         {
             DbSet.Update(entity);
-            await SaveChanges();
+            await SaveChangesAsync();
         }
 
-        public async Task<int> SaveChanges()
+        public async Task<int> SaveChangesAsync()
         {
             return await Db.SaveChangesAsync();
         }

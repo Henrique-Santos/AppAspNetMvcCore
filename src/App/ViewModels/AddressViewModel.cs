@@ -1,5 +1,4 @@
-﻿using Business.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace App.ViewModels
@@ -36,22 +35,6 @@ namespace App.ViewModels
         [HiddenInput] // Sempre será hidden nos formulários
         public Guid SupplierId { get; set; }
 
-        public string Complement { get; set; }
-
-        public static explicit operator AddressViewModel(Address address)
-        {
-            return new AddressViewModel
-            {
-               Id = address.Id,
-               PublicPlace = address.PublicPlace,
-               Number = address.Number,
-               ZipCode = address.ZipCode,
-               Neighborhood = address.Neighborhood,
-               City = address.City,
-               State = address.State,
-               Complement = address.Complement,
-               SupplierId = address.SupplierId,
-            };
-        }
+        public string Complement { get; set; }       
     }
 }

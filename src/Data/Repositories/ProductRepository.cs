@@ -12,7 +12,7 @@ namespace Data.Repositories
 
         public async Task<IEnumerable<Product>> GetProductsBySupplierAsync(Guid supplierId)
         {
-            return await Search(x => x.SupplierId == supplierId);
+            return await SearchAsync(x => x.SupplierId == supplierId);
         }
 
         public async Task<Product> GetSupplierAndProductAsync(Guid id)

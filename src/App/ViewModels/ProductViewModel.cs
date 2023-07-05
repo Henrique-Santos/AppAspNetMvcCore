@@ -1,5 +1,4 @@
-﻿using Business.Models;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace App.ViewModels
@@ -34,19 +33,6 @@ namespace App.ViewModels
 
         public SupplierViewModel Supplier { get; set; }
 
-        public static explicit operator ProductViewModel(Product product)
-        {
-            return new ProductViewModel
-            {
-               Id = product.Id,
-               SupplierId = product.SupplierId,
-               Name = product.Name,
-               Description = product.Description,
-               Value = product.Value,
-               DateRegistration = product.DateRegistration,
-               Image = product.Image,
-               Supplier = (SupplierViewModel)product.Supplier
-            };
-        }
+        public IEnumerable<SupplierViewModel> Suppliers { get; set; }
     }
 }
