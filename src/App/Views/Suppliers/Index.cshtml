@@ -1,16 +1,16 @@
 ﻿@model IEnumerable<App.ViewModels.SupplierViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Suppliers List";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-info" asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
+<table class="table table-hover">
+    <thead class="thead-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
@@ -20,9 +20,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Active)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SupplierType)
             </th>
             <th></th>
         </tr>
@@ -39,13 +36,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Active)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SupplierType)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            <td class="text-right">
+                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">
+                    <span class="fa fa-search"></span>
+                </a>
+                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">
+                    <span class="fa fa-pencil"></span>
+                </a>
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">
+                    <span class="fa fa-trash"></span>
+                </a>
             </td>
         </tr>
 }
