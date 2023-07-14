@@ -62,9 +62,21 @@ namespace App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid id, ProductViewModel productViewModel)
         {
-            if (id != productViewModel.Id) return NotFound();            
+            if (id != productViewModel.Id) return NotFound();   
+            var productUpdated = await GetProduct(id);
+            productViewModel.Suppliers = productUpdated.Suppliers;
+            productViewModel.Image = productUpdated.Image;
             if (!ModelState.IsValid) return View(productViewModel);
-            await _productRepository.UpdateAsync(_mapper.Map<Product>(productViewModel));
+            if(productViewModel.ImageUpload is not null)
+            {
+                var imagePrefix = Guid.NewGuid() + "_";
+                if (!await UploadFileAsync(productViewModel.ImageUpload, imagePrefix)) return View(productViewModel);
+                productUpdated.Image = imagePrefix + productViewModel.ImageUpload.FileName;
+            }
+            productUpdated.Name = productViewModel.Name;
+            productUpdated.Description = productViewModel.Description;
+            productUpdated.Value = productViewModel.Value;
+            await _productRepository.UpdateAsync(_mapper.Map<Product>(productUpdated));
             return RedirectToAction(nameof(Index));
         }
         

@@ -5,7 +5,11 @@ namespace Data.Contexts
 {
     public class MyDbContext : DbContext
     {
-        public MyDbContext(DbContextOptions options) : base(options) { }
+        public MyDbContext(DbContextOptions options) : base(options) 
+        {
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+            ChangeTracker.AutoDetectChangesEnabled = false;
+        }
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Address> Addresses { get; set; }
