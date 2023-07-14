@@ -16,3 +16,7 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+input, select, textarea, file {
+    max-width: 400px;
+}

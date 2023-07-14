@@ -44,10 +44,13 @@ namespace App.Controllers
         {
             productViewModel = await SetSuppliers(productViewModel);
             if (!ModelState.IsValid) return View(productViewModel);
+            var imagePrefix = Guid.NewGuid() + "_";
+            if (!await UploadFileAsync(productViewModel.ImageUpload, imagePrefix)) return View(productViewModel);
+            productViewModel.Image = imagePrefix + productViewModel.ImageUpload.FileName;
             await _productRepository.AddAsync(_mapper.Map<Product>(productViewModel));
-            return View(productViewModel);
+            return RedirectToAction(nameof(Index));
         }
-        
+
         public async Task<IActionResult> Edit(Guid id)
         {
             var product = await GetProduct(id);            
@@ -94,6 +97,23 @@ namespace App.Controllers
         {            
             product.Suppliers = _mapper.Map<IEnumerable<SupplierViewModel>>(await _supplierRepository.GetAllAsync());
             return product;
+        }
+
+        private async Task<bool> UploadFileAsync(IFormFile file, string imagePrefix)
+        {
+            if (file.Length <= 0) return false;
+            // Monta o caminho para a pasta wwwroot/images
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", imagePrefix + file.FileName);
+            // Verificando se já existe um arquivo com esse nome
+            if (System.IO.File.Exists(path))
+            {
+                ModelState.AddModelError(string.Empty, "There is already a file with that name");
+                return false;
+            }
+            // Gravando o arquivo de imagem no disco
+            using var stream = new FileStream(path, FileMode.Create);
+            await file.CopyToAsync(stream);
+            return true;
         }
     }
 }
