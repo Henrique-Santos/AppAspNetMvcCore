@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using App.Extensions;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace App.ViewModels
@@ -20,6 +21,7 @@ namespace App.ViewModels
         [StringLength(1000, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
         public string Description { get; set; }
 
+        [Coin] // Attributo customizado
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public decimal Value { get; set; }
 

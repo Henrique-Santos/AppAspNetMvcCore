@@ -1,0 +1,51 @@
+﻿@model IEnumerable<App.ViewModels.ProductViewModel>
+
+  
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Supplier)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Value)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    <img src="~/images/@item.Image" alt="@item.Image" style="width: 70px; height: 100px;">
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Supplier.Name)
+                </td>
+                <td>
+                    @item.Value.ToString("C") <!-- Exibe o simbolo da moeda com base na cultura da app -->
+                </td>
+                <td class="text-right">
+                    <a class="btn btn-info" asp-controller="Products" asp-action="Details" asp-route-id="@item.Id">
+                        <span class="fa fa-search"></span>
+                    </a>
+                    <a class="btn btn-warning" disable-by-claim-name="Product" disable-by-claim-value="Edit" asp-controller="Products" asp-action="Edit" asp-route-id="@item.Id">
+                        <span class="fa fa-pencil"></span>
+                    </a>
+                    <a class="btn btn-danger" disable-by-claim-name="Product" disable-by-claim-value="Delete" asp-controller="Products" asp-action="Delete" asp-route-id="@item.Id">
+                        <span class="fa fa-trash"></span>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

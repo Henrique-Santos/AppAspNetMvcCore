@@ -1,4 +1,5 @@
-﻿@model IEnumerable<App.ViewModels.SupplierViewModel>
+﻿@using App.Extensions;
+@model IEnumerable<App.ViewModels.SupplierViewModel>
 
 @{
     ViewData["Title"] = "Suppliers List";
@@ -25,29 +26,29 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Document)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Active)
-            </td>
-            <td class="text-right">
-                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">
-                    <span class="fa fa-search"></span>
-                </a>
-                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">
-                    <span class="fa fa-pencil"></span>
-                </a>
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">
-                    <span class="fa fa-trash"></span>
-                </a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @this.FormatDocument(item.SupplierType, item.Document)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Active)
+                </td>
+                <td class="text-right">
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">
+                        <span class="fa fa-search"></span>
+                    </a>
+                    <a class="btn btn-warning" disable-by-claim-name="Supplier" disable-by-claim-value="Edit" asp-action="Edit" asp-route-id="@item.Id">
+                        <span class="fa fa-pencil"></span>
+                    </a>
+                    <a class="btn btn-danger" suppress-by-claim-name="Supplier" suppress-by-claim-value="Delete" asp-action="Delete" asp-route-id="@item.Id">
+                        <span class="fa fa-trash"></span>
+                    </a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
